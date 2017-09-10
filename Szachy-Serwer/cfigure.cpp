@@ -30,7 +30,7 @@ string CFigure::SerializationAvailablePosition()
     for (int i = 0 ; i < availablePositions.size(); i++)
     {
         stringAvailablePosition += availablePositions[i]->GetX();
-        stringAvailablePosition += to_string(availablePositions[i]->GetY());
+        stringAvailablePosition += std::to_string(availablePositions[i]->GetY());
         stringAvailablePosition += '|';
     }
     return stringAvailablePosition;

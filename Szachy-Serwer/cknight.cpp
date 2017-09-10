@@ -6,6 +6,8 @@ CKnight::CKnight(Color color, CField *position, CChessboard *chessboard) : CFigu
 
 vector<CField *> CKnight::CheckWhichFieldsAreAvailable()
 {
+	vector <CField*> field;
+	return field;
 }
 
 string CKnight::SerializationPosition()

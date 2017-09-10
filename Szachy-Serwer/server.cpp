@@ -1,4 +1,7 @@
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "server.h"
+
+#pragma comment(lib, "Ws2_32.lib")
 
 Server server;
 
@@ -93,7 +96,7 @@ void Server::SetGiveFirstId(bool value)
 }
 
 
-unsigned int ServClient(void *data)
+unsigned int _stdcall ServClient(void *data)
 {
     extern Server server;
     SOCKET* client =(SOCKET*)data;
