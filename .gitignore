@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+*.VC.db
+
+*/Debug/*
+ipch/*
+Debug/*
