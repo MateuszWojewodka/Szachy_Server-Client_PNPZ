@@ -1,4 +1,5 @@
 #include "client.h"
+#include <string>
 
 Client::Client()
 {
@@ -27,6 +28,7 @@ string Client::comunicationWithServer(string request)
     char response[4096];
     if (send (Connection,request.c_str(), request.size() + 1, 0) != SOCKET_ERROR)
     {
+		//string temp = request;
         cout << "CLIENT> " << request << endl;
         //ZeroMemory(response,4096);
         if (recv (Connection, response, 4096, 0) != SOCKET_ERROR)

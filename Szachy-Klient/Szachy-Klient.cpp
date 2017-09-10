@@ -5,9 +5,9 @@
 #endif
 
 #include <tchar.h>
-#include <windows.h>
 #include "Client.h"
 #include "CChessboard.h"
+#include <windows.h>
 
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
@@ -127,7 +127,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 
 void PrepareToShowImage(LPCSTR path, HDC &hdcType, HBITMAP &bmpType, HBITMAP &bmpOldType)
 {
-	bmpType = (HBITMAP)LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	bmpType = (HBITMAP)LoadImage(NULL, (LPCWSTR)path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	hdcType = CreateCompatibleDC(hdc);
 	bmpOldType = (HBITMAP)SelectObject(hdcType, bmpType);
 }
