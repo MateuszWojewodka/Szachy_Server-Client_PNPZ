@@ -90,20 +90,20 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 	chessboard = new CChessboard();
 
 	//create buttons
-	g_hBGraj = CreateWindowEx(0, (LPCWSTR)"BUTTON", (LPCWSTR)"Graj", WS_CHILD | WS_VISIBLE, 735, 100, 150, 30, hwnd, NULL, hThisInstance, NULL);
-	g_hBWyjscie = CreateWindowEx(0, (LPCWSTR)"BUTTON", (LPCWSTR)"Wyjscie", WS_CHILD | WS_VISIBLE, 735, 150, 150, 30, hwnd, NULL, hThisInstance, NULL);
-	g_hBStart = CreateWindowEx(0, (LPCWSTR)"BUTTON", (LPCWSTR)"Start", WS_CHILD, 735, 100, 150, 30, hwnd, NULL, hThisInstance, NULL);
-	g_hBPowrot = CreateWindowEx(0, (LPCWSTR)"BUTTON", (LPCWSTR)"Powrot", WS_CHILD, 735, 150, 150, 30, hwnd, NULL, hThisInstance, NULL);
+	g_hBGraj = CreateWindowEx(0, "BUTTON", "Graj", WS_CHILD | WS_VISIBLE, 735, 100, 150, 30, hwnd, NULL, hThisInstance, NULL);
+	g_hBWyjscie = CreateWindowEx(0, "BUTTON", "Wyjscie", WS_CHILD | WS_VISIBLE, 735, 150, 150, 30, hwnd, NULL, hThisInstance, NULL);
+	g_hBStart = CreateWindowEx(0, "BUTTON", "Start", WS_CHILD, 735, 100, 150, 30, hwnd, NULL, hThisInstance, NULL);
+	g_hBPowrot = CreateWindowEx(0, "BUTTON", "Powrot", WS_CHILD, 735, 150, 150, 30, hwnd, NULL, hThisInstance, NULL);
 
 	//create labels
-	hLPleaseWait = CreateWindowEx(0, (LPCWSTR)"STATIC", NULL, WS_CHILD |
+	hLPleaseWait = CreateWindowEx(0, "STATIC", NULL, WS_CHILD |
 		SS_CENTER | WS_VISIBLE, 735, 50, 150, 30, hwnd, NULL, hThisInstance, NULL);
-	SetWindowText(hLPleaseWait, (LPCWSTR)"Prosze czekac");
+	SetWindowText(hLPleaseWait, "Prosze czekac");
 	ShowWindow(hLPleaseWait, SW_HIDE);
 
-	hLStartGame = CreateWindowEx(0, (LPCWSTR)"STATIC", NULL, WS_CHILD |
+	hLStartGame = CreateWindowEx(0, "STATIC", NULL, WS_CHILD |
 		SS_CENTER | WS_VISIBLE, 735, 50, 150, 30, hwnd, NULL, hThisInstance, NULL);
-	SetWindowText(hLStartGame, (LPCWSTR)"Nacisnij start");
+	SetWindowText(hLStartGame, "Nacisnij start");
 	ShowWindow(hLStartGame, SW_HIDE);
 
 	/* Make the window visible on the screen */
@@ -127,7 +127,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 
 void PrepareToShowImage(LPCSTR path, HDC &hdcType, HBITMAP &bmpType, HBITMAP &bmpOldType)
 {
-	bmpType = (HBITMAP)LoadImage(NULL, (LPCWSTR)path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	bmpType = (HBITMAP)LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	hdcType = CreateCompatibleDC(hdc);
 	bmpOldType = (HBITMAP)SelectObject(hdcType, bmpType);
 }
