@@ -35,9 +35,27 @@ HWND g_hBGraj, g_hBWyjscie, g_hBStart, g_hBPowrot;
 HWND hLPleaseWait, hLStartGame;
 
 //image variables
-HBITMAP bmpfieldw, bmpfieldb, bmpPawnBB, bmpPawnBW, bmpPawnWW, bmpPawnWB;
-HBITMAP bmpOldFieldW, bmpOldFieldB, bmpOldPawnBB, bmpOldPawnBW, bmpOldPawnWW, bmpOldPawnWB;
-HDC hdc, hdcfieldw, hdcfieldb, hdcPawnBB, hdcPawnBW, hdcPawnWW, hdcPawnWB;
+HBITMAP bmpfieldw, bmpfieldb;
+HBITMAP bmpPawnBB, bmpPawnBW, bmpPawnWW, bmpPawnWB;
+HBITMAP bmpCastelBB, bmpCastelBW, bmpCastelWW, bmpCastelWB;
+HBITMAP bmpQueenBB, bmpQueenBW, bmpQueenWW, bmpQueenWB;
+HBITMAP bmpKingBB, bmpKingBW, bmpKingWW, bmpKingWB;
+HBITMAP bmpKnightBB, bmpKnightBW, bmpKnightWW, bmpKnightWB;
+HBITMAP bmpBishopBB, bmpBishopBW, bmpBishopWW, bmpBishopWB;
+HBITMAP bmpOldFieldW, bmpOldFieldB;
+HBITMAP bmpOldPawnBB, bmpOldPawnBW, bmpOldPawnWW, bmpOldPawnWB;
+HBITMAP bmpOldCastelBB, bmpOldCastelBW, bmpOldCastelWW, bmpOldCastelWB;
+HBITMAP bmpOldQueenBB, bmpOldQueenBW, bmpOldQueenWW, bmpOldQueenWB;
+HBITMAP bmpOldKingBB, bmpOldKingBW, bmpOldKingWW, bmpOldKingWB;
+HBITMAP bmpOldKnightBB, bmpOldKnightBW, bmpOldKnightWW, bmpOldKnightWB;
+HBITMAP bmpOldBishopBB, bmpOldBishopBW, bmpOldBishopWW, bmpOldBishopWB;
+HDC hdc, hdcfieldw, hdcfieldb;
+HDC hdcPawnBB, hdcPawnBW, hdcPawnWW, hdcPawnWB;
+HDC hdcCastelBB, hdcCastelBW, hdcCastelWW, hdcCastelWB;
+HDC hdcQueenBB, hdcQueenBW, hdcQueenWW, hdcQueenWB;
+HDC hdcKingBB, hdcKingBW, hdcKingWW, hdcKingWB;
+HDC hdcKnightBB, hdcKnightBW, hdcKnightWW, hdcKnightWB;
+HDC hdcBishopBB, hdcBishopBW, hdcBishopWW, hdcBishopWB;
 
 
 int WINAPI WinMain(HINSTANCE hThisInstance,
@@ -132,6 +150,24 @@ void PrepareToShowImage(LPCSTR path, HDC &hdcType, HBITMAP &bmpType, HBITMAP &bm
 	bmpOldType = (HBITMAP)SelectObject(hdcType, bmpType);
 }
 
+void ShowFigure(int i, int j, CChessboard *chessboard, HDC hdcFigure1, HDC hdcFigure2, HDC hdcFigure3, HDC hdcFigure4, char typeFigure)
+{
+	if (chessboard->GetField(i, j)->GetVisitor() != NULL)
+	{
+		if (chessboard->GetField(i, j)->GetVisitor()->GetType() == typeFigure)
+		{
+			if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 1 && chessboard->GetField(i, j)->GetColor() == 1)
+				BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcFigure1, 0, 0, SRCCOPY);
+			if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 1 && chessboard->GetField(i, j)->GetColor() == 0)
+				BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcFigure2, 0, 0, SRCCOPY);
+			if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 0 && chessboard->GetField(i, j)->GetColor() == 0)
+				BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcFigure3, 0, 0, SRCCOPY);
+			if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 0 && chessboard->GetField(i, j)->GetColor() == 1)
+				BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcFigure4, 0, 0, SRCCOPY);
+		}
+	}
+}
+
 LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)                  /* handle the messages */
@@ -178,24 +214,41 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 		PrepareToShowImage("img//pawnBW.bmp", hdcPawnBW, bmpPawnBW, bmpOldPawnBW);
 		PrepareToShowImage("img//pawnWW.bmp", hdcPawnWW, bmpPawnWW, bmpOldPawnWW);
 		PrepareToShowImage("img//pawnWB.bmp", hdcPawnWB, bmpPawnWB, bmpOldPawnWB);
+
+		PrepareToShowImage("img//castelBB.bmp", hdcCastelBB, bmpCastelBB, bmpOldCastelBB);
+		PrepareToShowImage("img//castelBW.bmp", hdcCastelBW, bmpCastelBW, bmpOldCastelBW);
+		PrepareToShowImage("img//castelWW.bmp", hdcCastelWW, bmpCastelWW, bmpOldCastelWW);
+		PrepareToShowImage("img//castelWB.bmp", hdcCastelWB, bmpCastelWB, bmpOldCastelWB);
+
+		PrepareToShowImage("img//queenBB.bmp", hdcQueenBB, bmpQueenBB, bmpOldQueenBB);
+		PrepareToShowImage("img//queenBW.bmp", hdcQueenBW, bmpQueenBW, bmpOldQueenBW);
+		PrepareToShowImage("img//queenWW.bmp", hdcQueenWW, bmpQueenWW, bmpOldQueenWW);
+		PrepareToShowImage("img//queenWB.bmp", hdcQueenWB, bmpQueenWB, bmpOldQueenWB);
+
+		PrepareToShowImage("img//kingBB.bmp", hdcKingBB, bmpKingBB, bmpOldKingBB);
+		PrepareToShowImage("img//kingBW.bmp", hdcKingBW, bmpKingBW, bmpOldKingBW);
+		PrepareToShowImage("img//kingWW.bmp", hdcKingWW, bmpKingWW, bmpOldKingWW);
+		PrepareToShowImage("img//kingWB.bmp", hdcKingWB, bmpKingWB, bmpOldKingWB);
+
+		PrepareToShowImage("img//knightBB.bmp", hdcKnightBB, bmpKnightBB, bmpOldKnightBB);
+		PrepareToShowImage("img//knightBW.bmp", hdcKnightBW, bmpKnightBW, bmpOldKnightBW);
+		PrepareToShowImage("img//knightWW.bmp", hdcKnightWW, bmpKnightWW, bmpOldKnightWW);
+		PrepareToShowImage("img//knightWB.bmp", hdcKnightWB, bmpKnightWB, bmpOldKnightWB);
+
+		PrepareToShowImage("img//bishopBB.bmp", hdcBishopBB, bmpBishopBB, bmpOldBishopBB);
+		PrepareToShowImage("img//bishopBW.bmp", hdcBishopBW, bmpBishopBW, bmpOldBishopBW);
+		PrepareToShowImage("img//bishopWW.bmp", hdcBishopWW, bmpBishopWW, bmpOldBishopWW);
+		PrepareToShowImage("img//bishopWB.bmp", hdcBishopWB, bmpBishopWB, bmpOldBishopWB);
 		for (int i = 65; i < 73; i++)
 		{
 			for (int j = 1; j < 9; j++)
 			{
-				if (chessboard->GetField(i, j)->GetVisitor() != NULL)
-				{
-					if (chessboard->GetField(i, j)->GetVisitor()->GetType() == 'P')
-					{
-						if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 1 && chessboard->GetField(i, j)->GetColor() == 1)
-							BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcPawnBB, 0, 0, SRCCOPY);
-						if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 1 && chessboard->GetField(i, j)->GetColor() == 0)
-							BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcPawnBW, 0, 0, SRCCOPY);
-						if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 0 && chessboard->GetField(i, j)->GetColor() == 0)
-							BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcPawnWW, 0, 0, SRCCOPY);
-						if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == 0 && chessboard->GetField(i, j)->GetColor() == 1)
-							BitBlt(hdc, chessboard->GetField(i, j)->GetXPosition(), chessboard->GetField(i, j)->GetYPosition(), 90, 90, hdcPawnWB, 0, 0, SRCCOPY);
-					}
-				}
+				ShowFigure(i, j, chessboard, hdcPawnBB, hdcPawnBW, hdcPawnWW, hdcPawnWB, 'P');
+				ShowFigure(i, j, chessboard, hdcCastelBB, hdcCastelBW, hdcCastelWW, hdcCastelWB, 'C');
+				ShowFigure(i, j, chessboard, hdcQueenBB, hdcQueenBW, hdcQueenWW, hdcQueenWB, 'Q');
+				ShowFigure(i, j, chessboard, hdcKingBB, hdcKingBW, hdcKingWW, hdcKingWB, 'W');
+				ShowFigure(i, j, chessboard, hdcKnightBB, hdcKnightBW, hdcKnightWW, hdcKnightWB, 'K');
+				ShowFigure(i, j, chessboard, hdcBishopBB, hdcBishopBW, hdcBishopWW, hdcBishopWB, 'B');
 			}
 		}
 
