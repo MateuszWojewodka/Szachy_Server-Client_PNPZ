@@ -1,5 +1,8 @@
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "client.h"
 #include <string>
+
+#pragma comment(lib, "Ws2_32.lib")
 
 Client::Client()
 {
