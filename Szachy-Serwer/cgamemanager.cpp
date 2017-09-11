@@ -59,10 +59,12 @@ string CGameManager::CurrentPlayerAction(string request)
 			//sprawdz czy zaznaczyl TERAZ pole na ktore moze sie ruszyc
             if (SerializationAvailableFields(currentPlayer->GetMarkedFigure()->GetPosition()->GetX(),currentPlayer->GetMarkedFigure()->GetPosition()->GetY()).find(search) != string::npos)
             {
-				//obsluga bicia
+				//obsluga bicia [ustawienie pozycji pionka bitego na 0]
 				if (chessboard->GetField(x, y)->GetVisitor() != NULL) chessboard->GetField(x, y)->GetVisitor()->SetPosition(NULL);
-				//aktualizacja goscia na polu
+				//aktualizacja goscia na ZAZNACZONYM polu
                 chessboard->GetField(x,y)->SetVisitor(currentPlayer->GetMarkedFigure());
+				//POPRZEDNIE pole visitor jako null
+				currentPlayer->GetMarkedFigure()->GetPosition()->SetVisitor(NULL);
 				//aktualizacja pola figury
                 currentPlayer->GetMarkedFigure()->SetPosition(chessboard->GetField(x,y));
 				//zaznaczona figura ponownie 0

@@ -10,11 +10,16 @@ vector<CField *> CBishop::CheckWhichFieldsAreAvailable()
     vector <CField*> availableField;
     int i = position->GetX() + 1;
     int j = position->GetY() + 1;
-    while (i <= 72 && j <=8)
+    while (i <= 72 && j <= 8)
     {
-        if (chessboard->GetField(i, j)->GetVisitor() == NULL || chessboard->GetField(i,j)->GetVisitor()->GetColor() != color)
+        if (chessboard->GetField(i, j)->GetVisitor() == NULL)
             availableField.push_back(chessboard->GetField(i,j));
-        if (chessboard->GetField(i,j)->GetVisitor() != NULL)
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() != color)
+		{
+			availableField.push_back(chessboard->GetField(i, j));
+			break;
+		}
+        else if (chessboard->GetField(i,j)->GetVisitor()->GetColor() == color)
             break;
         i++;
         j++;
@@ -24,10 +29,15 @@ vector<CField *> CBishop::CheckWhichFieldsAreAvailable()
     j = position->GetY() - 1;
     while (i >= 65 && j >= 1)
     {
-        if (chessboard->GetField(i, j)->GetVisitor() == NULL || chessboard->GetField(i,j)->GetVisitor()->GetColor() != color)
-            availableField.push_back(chessboard->GetField(i,j));
-        if (chessboard->GetField(i,j)->GetVisitor() != NULL)
-            break;
+		if (chessboard->GetField(i, j)->GetVisitor() == NULL)
+			availableField.push_back(chessboard->GetField(i, j));
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() != color)
+		{
+			availableField.push_back(chessboard->GetField(i, j));
+			break;
+		}
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == color)
+			break;
         i--;
         j--;
     }
@@ -36,10 +46,15 @@ vector<CField *> CBishop::CheckWhichFieldsAreAvailable()
     j = position->GetY() + 1;
     while (i >= 65 && j <= 8)
     {
-        if (chessboard->GetField(i, j)->GetVisitor() == NULL || chessboard->GetField(i,j)->GetVisitor()->GetColor() != color)
-            availableField.push_back(chessboard->GetField(i,j));
-        if (chessboard->GetField(i,j)->GetVisitor() != NULL)
-            break;
+		if (chessboard->GetField(i, j)->GetVisitor() == NULL)
+			availableField.push_back(chessboard->GetField(i, j));
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() != color)
+		{
+			availableField.push_back(chessboard->GetField(i, j));
+			break;
+		}
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == color)
+			break;
         i--;
         j++;
     }
@@ -48,10 +63,15 @@ vector<CField *> CBishop::CheckWhichFieldsAreAvailable()
     j = position->GetY() - 1;
     while (i <= 72 && j >= 1)
     {
-        if (chessboard->GetField(i, j)->GetVisitor() == NULL || chessboard->GetField(i,j)->GetVisitor()->GetColor() != color)
-            availableField.push_back(chessboard->GetField(i,j));
-        if (chessboard->GetField(i,j)->GetVisitor() != NULL)
-            break;
+		if (chessboard->GetField(i, j)->GetVisitor() == NULL)
+			availableField.push_back(chessboard->GetField(i, j));
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() != color)
+		{
+			availableField.push_back(chessboard->GetField(i, j));
+			break;
+		}
+		else if (chessboard->GetField(i, j)->GetVisitor()->GetColor() == color)
+			break;
         i++;
         j--;
     }
