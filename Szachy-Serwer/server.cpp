@@ -104,46 +104,47 @@ unsigned int _stdcall ServClient(void *data)
     printf("%s \t %d\n","Client connected",GetCurrentThreadId());
     char recvbuf[4096];
     int bytesRecv;
-    while(true)
-    {
-        bytesRecv = recv(Client,recvbuf,4096,0);
-        string recvString(recvbuf);
-        if (recvString == "whenStart")
-        {
-            if (server.GetNumberOfClients() == 2)
-                send(Client,"now", 4096, 0);
-            else
-                send(Client,"", 4096, 0);
-        }
-        if (recvString == "giveId")
-        {
-            if (server.GetGiveFirstId() == false)
-            {
-                send(Client,"pW", 4096, 0);
-                server.SetGiveFirstId(true);
-            }
-            else
-                send(Client, "pB", 4096, 0);
-        }
-        if (recvString.find("move") != string::npos)
-            send(Client, server.GM->CurrentPlayerAction(recvString).c_str(), server.GM->CurrentPlayerAction(recvString).size(), 0);
-        if (recvString.find("update") != string::npos)
-        {
-            string data = server.GM->SerializationFigurePosition();
-            send(Client, data.c_str(), data.size(), 0);
-        }
-
-        if (bytesRecv == SOCKET_ERROR)
-        {
-            closesocket(Client);
-            printf("%s \t %d\n","Client disconnected",GetCurrentThreadId());
-            server.SubstractClient();
-            cout << "Number of clients: " << server.GetNumberOfClients() << endl;
-            return 0;
-        }
-        printf("%s \t %d\n",recvbuf,GetCurrentThreadId());
-        Sleep(1000);
-    }
+	while (true)
+	{
+		bytesRecv = recv(Client, recvbuf, 4096, 0);
+		string recvString(recvbuf);
+		if (recvString == "whenStart")
+		{
+			if (server.GetNumberOfClients() == 2)
+				send(Client, "now", 4096, 0);
+			else
+				send(Client, "", 4096, 0);
+		}
+		else if (recvString == "giveId")
+		{
+			if (server.GetGiveFirstId() == false)
+			{
+				send(Client, "pW", 4096, 0);
+				server.SetGiveFirstId(true);
+			}
+			else
+				send(Client, "pB", 4096, 0);
+		}
+		else if (recvString.find("move") != string::npos)
+			send(Client, server.GM->CurrentPlayerAction(recvString).c_str(), server.GM->CurrentPlayerAction(recvString).size(), 0);
+		else if (recvString.find("update") != string::npos)
+		{
+			string data = server.GM->SerializationFigurePosition();
+			send(Client, data.c_str(), data.size(), 0);
+		}
+		else if (bytesRecv == SOCKET_ERROR)
+		{
+			closesocket(Client);
+			printf("%s \t %d\n", "Client disconnected", GetCurrentThreadId());
+			server.SubstractClient();
+			cout << "Number of clients: " << server.GetNumberOfClients() << endl;
+			return 0;
+		}
+		else
+			send(Client, " ", 4096, 0);
+		printf("%s \t %d\n", recvbuf, GetCurrentThreadId());
+		Sleep(250);
+	}
     return 0;
 }
 

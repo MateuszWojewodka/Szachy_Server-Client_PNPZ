@@ -1,0 +1,31 @@
+﻿  stdafx.cpp
+  cbishop.cpp
+cbishop.cpp(76): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  ccastel.cpp
+ccastel.cpp(56): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cchessboard.cpp
+cchessboard.cpp(28): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  ccolor.cpp
+ccolor.cpp(3): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cfield.cpp
+cfield.cpp(34): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cfigure.cpp
+cfigure.cpp(47): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cgamemanager.cpp
+cgamemanager.cpp(89): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  chessclient.cpp
+chessclient.cpp(6): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cking.cpp
+cking.cpp(56): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cknight.cpp
+cknight.cpp(28): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cpawn.cpp
+cpawn.cpp(45): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cplayer.cpp
+cplayer.cpp(23): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  cqueen.cpp
+cqueen.cpp(34): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  server.cpp
+server.cpp(150): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Szachy-Serwer.cpp
+Szachy-Serwer.cpp(53): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?

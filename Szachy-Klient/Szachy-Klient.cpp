@@ -7,6 +7,9 @@
 #include <tchar.h>
 #include "Client.h"
 #include "CChessboard.h"
+#include <string>
+#include <sstream>
+#include <iostream>
 #include <windows.h>
 
 /*  Declare Windows procedure  */
@@ -142,6 +145,14 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 
 
 /*  This function is called by the Windows function DispatchMessage()  */
+std::string to_string(int i)
+{
+	{
+		std::ostringstream o;
+		o << i;
+		return o.str();
+	}
+}
 
 void PrepareToShowImage(LPCSTR path, HDC &hdcType, HBITMAP &bmpType, HBITMAP &bmpOldType)
 {
@@ -254,6 +265,18 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 
 		ReleaseDC(hwnd, hdc);
 		break;
+	}
+
+	case WM_LBUTTONDOWN:
+	{
+		int sign = 65 + LOWORD(lParam) / 90;
+		char signChar = (char)sign;
+		int digit = 8 - HIWORD(lParam) / 90;
+		if ((signChar >= 65 && signChar <= 72) && (digit >= 1 && digit <= 8))
+		{
+			string whichField = id + "|" + signChar + std::to_string(digit);
+			client->comunicationWithServer(whichField);
+		}
 	}
 
 	case WM_CTLCOLORSTATIC:
