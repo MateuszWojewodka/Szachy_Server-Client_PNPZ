@@ -21,8 +21,8 @@ TCHAR szClassName[] = _T("CodeBlocksWindowsApp");
 
 //CLIENT
 Client *client;
-string request = "";
-string id = "";
+string request = " ";
+string id = " ";
 
 //GRAPHIC
 //Chessboard
@@ -187,7 +187,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 	{
 		if (request == "whenStart")
 		{
-			if (client->comunicationWithServer(request) == "now")
+			if (client->comunicationWithServer(request).find("now") != string::npos)
 			{
 				ShowWindow(hLPleaseWait, SW_HIDE);
 				ShowWindow(hLStartGame, SW_SHOW);
@@ -301,7 +301,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 			//LOGIC
 			client = new Client();
 			request = "whenStart";
-			SetTimer(hwnd, 0, 2000, (TIMERPROC)NULL);
+			SetTimer(hwnd, 0, 3000, (TIMERPROC)NULL);
 			//GRAPHIC
 			ShowWindow(g_hBGraj, SW_HIDE);
 			ShowWindow(g_hBWyjscie, SW_HIDE);

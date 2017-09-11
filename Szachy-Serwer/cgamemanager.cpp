@@ -29,16 +29,21 @@ CGameManager::CGameManager()
     playerB = new CPlayer (figureB);
 
     currentPlayer = playerW;
+
+	DeleteFigure('A', 2);
 }
 
 string CGameManager::CurrentPlayerAction(string request)
 {
-    if ((request.find("pW")!= string::npos && playerW == currentPlayer) || (request.find("pB")!= NULL && playerB == currentPlayer))
+	//pierwsze warunki: jesli w zapytaniu bylo pW lub pB (zapytania zwiazane z nacisnieciem LPM) sprawdz czy pytajacy to gracz ktorego jest ruch
+    if ((request.find("pW")!= string::npos && playerW == currentPlayer) || (request.find("pB") != string::npos && playerB == currentPlayer))
     {
         char x = request[3];
-        int y = (int) (request[4] - 48); //convert ASCII
+        int y = (int) (request[4] - 48); 
+		//jesli spelniony war 1 to sprawdz czy gracz zaznaczyl jakas figure WCZESNIEJ
         if (currentPlayer->GetMarkedFigure() == NULL)
         {
+			//jesli nie zaznaczyl to sprawdz czy na tym polu jest figura i czy jest jego jesli tak to ja zaznacz
             if ((request.find("pW")!= string::npos && chessboard->GetField(x,y)->GetVisitor() != NULL && chessboard->GetField(x,y)->GetVisitor()->GetColor() == 0)
                     || (request.find("pB")!= string::npos && chessboard->GetField(x,y)->GetVisitor() != NULL && chessboard->GetField(x,y)->GetVisitor()->GetColor() == 1))
             {
@@ -46,17 +51,38 @@ string CGameManager::CurrentPlayerAction(string request)
                 return SerializationAvailableFields(x,y);
             }
         }
+		//jesli gracz zaznaczyl WCZESNIEJ figure to:
         else
         {
-            if (SerializationAvailableFields(currentPlayer->GetMarkedFigure()->GetPosition()->GetX(),currentPlayer->GetMarkedFigure()->GetPosition()->GetY()).find(x+y))
+			string search = " ";
+			search = x + std::to_string(y);
+			//sprawdz czy zaznaczyl TERAZ pole na ktore moze sie ruszyc
+            if (SerializationAvailableFields(currentPlayer->GetMarkedFigure()->GetPosition()->GetX(),currentPlayer->GetMarkedFigure()->GetPosition()->GetY()).find(search) != string::npos)
             {
+				//obsluga bicia
+				if (chessboard->GetField(x, y)->GetVisitor() != NULL) chessboard->GetField(x, y)->GetVisitor()->SetPosition(NULL);
+				//aktualizacja goscia na polu
                 chessboard->GetField(x,y)->SetVisitor(currentPlayer->GetMarkedFigure());
+				//aktualizacja pola figury
                 currentPlayer->GetMarkedFigure()->SetPosition(chessboard->GetField(x,y));
+				//zaznaczona figura ponownie 0
                 currentPlayer->SetMarkedFigure(NULL);
+				//przyznanie ruchu drugiemu graczowi
                 if (currentPlayer == playerW) currentPlayer = playerB;
                 else currentPlayer = playerW;
+				//aktualizacja
                 return SerializationFigurePosition();
             }
+			else
+			{
+				//jesli nie zaznaczyl TERAZ pola na ktore moze sie ruszyc sprobuj zmienic aktywna figure (analogiczny kod jak w 43 linijcee)
+				if ((request.find("pW") != string::npos && chessboard->GetField(x, y)->GetVisitor() != NULL && chessboard->GetField(x, y)->GetVisitor()->GetColor() == 0)
+					|| (request.find("pB") != string::npos && chessboard->GetField(x, y)->GetVisitor() != NULL && chessboard->GetField(x, y)->GetVisitor()->GetColor() == 1))
+				{
+					currentPlayer->SetMarkedFigure(chessboard->GetField(x, y)->GetVisitor());
+					return SerializationAvailableFields(x, y);
+				}
+			}
         }
     }
     return "";
@@ -82,7 +108,6 @@ string CGameManager::SerializationAvailableFields(char x, int y)
 {
     string stringAvailableField = "";
     stringAvailableField = chessboard->GetField(x,y)->GetVisitor()->SerializationAvailablePosition();
-    cout << stringAvailableField;
     return stringAvailableField;
 }
 

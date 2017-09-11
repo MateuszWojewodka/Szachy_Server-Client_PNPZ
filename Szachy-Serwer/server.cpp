@@ -1,5 +1,6 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "server.h"
+#include <string>
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -104,33 +105,42 @@ unsigned int _stdcall ServClient(void *data)
     printf("%s \t %d\n","Client connected",GetCurrentThreadId());
     char recvbuf[4096];
     int bytesRecv;
+	char response[4096] = "";
+	bool wypisz = false;
 	while (true)
 	{
 		bytesRecv = recv(Client, recvbuf, 4096, 0);
 		string recvString(recvbuf);
+		wypisz = false;
 		if (recvString == "whenStart")
 		{
 			if (server.GetNumberOfClients() == 2)
-				send(Client, "now", 4096, 0);
+				strcpy_s(response, "now");
 			else
-				send(Client, "", 4096, 0);
+				strcpy_s(response, " ");
 		}
 		else if (recvString == "giveId")
 		{
 			if (server.GetGiveFirstId() == false)
 			{
-				send(Client, "pW", 4096, 0);
+				strcpy_s(response, "pW");
 				server.SetGiveFirstId(true);
 			}
 			else
-				send(Client, "pB", 4096, 0);
+				strcpy_s(response, "pB");
 		}
-		else if (recvString.find("move") != string::npos)
-			send(Client, server.GM->CurrentPlayerAction(recvString).c_str(), server.GM->CurrentPlayerAction(recvString).size(), 0);
 		else if (recvString.find("update") != string::npos)
 		{
-			string data = server.GM->SerializationFigurePosition();
-			send(Client, data.c_str(), data.size(), 0);
+			string responseString;
+			responseString = server.GM->SerializationFigurePosition();
+			strcpy_s(response, responseString.c_str());
+		}
+		else if ((recvString.find("pW") != string::npos || recvString.find("pB") != string::npos))
+		{
+			string responseString;
+			responseString = server.GM->CurrentPlayerAction(recvString);
+			strcpy_s(response, responseString.c_str());
+			wypisz = true;
 		}
 		else if (bytesRecv == SOCKET_ERROR)
 		{
@@ -141,9 +151,13 @@ unsigned int _stdcall ServClient(void *data)
 			return 0;
 		}
 		else
-			send(Client, " ", 4096, 0);
-		printf("%s \t %d\n", recvbuf, GetCurrentThreadId());
-		Sleep(250);
+			strcpy_s(response, " ");
+		send(Client, response, 4096, 0);
+			if (wypisz)
+		{
+			printf("%s \t %d\n", recvbuf, GetCurrentThreadId());
+			cout << "SERVER> " << response << endl;
+		}
 	}
     return 0;
 }
