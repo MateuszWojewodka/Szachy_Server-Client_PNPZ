@@ -10,6 +10,7 @@ using namespace std;
 class Client
 {
     SOCKET Connection;
+	bool connected;
 public:
     Client();
     string comunicationWithServer (string request);

@@ -8,6 +8,7 @@ Client::Client()
 {
     WSADATA wsaData;
 
+	connected = false;
     int result = WSAStartup( MAKEWORD( 2, 2 ), & wsaData );
     if( result != NO_ERROR )
          printf( "Initialization error.\n" );
@@ -24,6 +25,7 @@ Client::Client()
         MessageBoxA(NULL,"Nie odnaleziono serwera", "Error", MB_OK | MB_ICONERROR);
     }
     cout << "Connected!" << endl;
+	connected = true;
 }
 
 string Client::comunicationWithServer(string request)
@@ -37,9 +39,7 @@ string Client::comunicationWithServer(string request)
         if (recv (Connection, response, 4096, 0) != SOCKET_ERROR)
         {
             cout << "SERVER> " << response << endl;
-
         }
-
     }
     return response;
 }

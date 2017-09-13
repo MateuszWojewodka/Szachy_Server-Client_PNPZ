@@ -16,6 +16,7 @@ class CChessboard
     public:
         CChessboard();
         void DeserializeFigurePositions (string data);
+		//bool CheckIfChessboardChange(string data);
         CField *GetField (char sign, int digit);
         virtual ~CChessboard();
 };

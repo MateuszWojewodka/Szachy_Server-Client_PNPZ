@@ -109,6 +109,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 
 	//create chessboard, which has fields x and y positions
 	chessboard = new CChessboard();
+	client = NULL;
 
 	//create buttons
 	g_hBGraj = CreateWindowEx(0, "BUTTON", "Graj", WS_CHILD | WS_VISIBLE, 735, 100, 150, 30, hwnd, NULL, hThisInstance, NULL);
@@ -275,7 +276,8 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 		if ((signChar >= 65 && signChar <= 72) && (digit >= 1 && digit <= 8))
 		{
 			string whichField = id + "|" + signChar + std::to_string(digit);
-			client->comunicationWithServer(whichField);
+			if (client != NULL)
+				client->comunicationWithServer(whichField);
 		}
 	}
 
@@ -301,7 +303,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 			//LOGIC
 			client = new Client();
 			request = "whenStart";
-			SetTimer(hwnd, 0, 3000, (TIMERPROC)NULL);
+			SetTimer(hwnd, 0, 200, (TIMERPROC)NULL);
 			//GRAPHIC
 			ShowWindow(g_hBGraj, SW_HIDE);
 			ShowWindow(g_hBWyjscie, SW_HIDE);

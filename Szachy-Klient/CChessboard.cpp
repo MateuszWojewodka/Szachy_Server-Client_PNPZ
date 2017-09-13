@@ -56,6 +56,14 @@ void CChessboard::DeserializeFigurePositions (string data)
     }
 }
 
+/*bool CChessboard::CheckIfChessboardChange(string data)
+{
+	CChessboard *currentChessboard = new CChessboard();
+	currentChessboard->DeserializeFigurePositions(data);
+
+	return false;
+}*/
+
 CField *CChessboard::GetField(char sign, int digit)
 {
     int y = (int)sign%8 - 1;

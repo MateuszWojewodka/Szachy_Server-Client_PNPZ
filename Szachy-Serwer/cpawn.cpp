@@ -18,7 +18,7 @@ vector<CField *> CPawn::CheckWhichFieldsAreAvailable()
 			if ((position->GetX() + 1) <= 72 && (position->GetY() + 1) <= 8)
 				if (chessboard->GetField(position->GetX() + 1, position->GetY() + 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() + 1, position->GetY() + 1)->GetVisitor()->GetColor() == 1)
 					availableField.push_back(chessboard->GetField(position->GetX() + 1, position->GetY() + 1));
-			if (position->GetX() - 1 >= 65 && position->GetY() + 1 >= 8)
+			if (position->GetX() - 1 >= 65 && position->GetY() + 1 <= 8)
 				if (chessboard->GetField(position->GetX() - 1, position->GetY() + 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() - 1, position->GetY() + 1)->GetVisitor()->GetColor() == 1)
 					availableField.push_back(chessboard->GetField(position->GetX() - 1, position->GetY() + 1));
 				return availableField;
