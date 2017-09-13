@@ -9,7 +9,7 @@ CPlayer::CPlayer(vector<CFigure *> myFigure)
 
 void CPlayer::SetMarkedFigure(CFigure *markedFigure)
 {
-    this->markedFigure = markedFigure;
+            this->markedFigure = markedFigure;
 }
 
 CFigure *CPlayer::GetMarkedFigure()
