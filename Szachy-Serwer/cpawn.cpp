@@ -8,23 +8,35 @@ CPawn::CPawn(Color color, CField *position, CChessboard *chessboard) : CFigure (
 vector<CField *> CPawn::CheckWhichFieldsAreAvailable()
 {
     vector <CField*> availableField;
-    switch (color)
-    {
-        case white:
-        {
-            if (chessboard->GetField(position->GetX(),position->GetY() + 1)->GetVisitor() == NULL)
-                availableField.push_back(chessboard->GetField(position->GetX(),position->GetY() + 1));
-                return availableField;
-        }
-        case black:
-        {
-        if (chessboard->GetField(position->GetX(),position->GetY() - 1)->GetVisitor() == NULL)
-            availableField.push_back(chessboard->GetField(position->GetX(),position->GetY() - 1));
-            return availableField;
-        }
-        default:
-            return availableField;
-    }
+	switch (color)
+	{
+		case white:
+		{
+			if (position->GetY() + 1 <= 8)
+				if (chessboard->GetField(position->GetX(), position->GetY() + 1)->GetVisitor() == NULL)
+					availableField.push_back(chessboard->GetField(position->GetX(), position->GetY() + 1));
+			if ((position->GetX() + 1) <= 72 && (position->GetY() + 1) <= 8)
+				if (chessboard->GetField(position->GetX() + 1, position->GetY() + 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() + 1, position->GetY() + 1)->GetVisitor()->GetColor() == 1)
+					availableField.push_back(chessboard->GetField(position->GetX() + 1, position->GetY() + 1));
+			if (position->GetX() - 1 >= 65 && position->GetY() + 1 >= 8)
+				if (chessboard->GetField(position->GetX() - 1, position->GetY() + 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() - 1, position->GetY() + 1)->GetVisitor()->GetColor() == 1)
+					availableField.push_back(chessboard->GetField(position->GetX() - 1, position->GetY() + 1));
+				return availableField;
+		}
+		case black:
+		{
+			if (position->GetY() - 1 >= 1)
+				if (chessboard->GetField(position->GetX(), position->GetY() - 1)->GetVisitor() == NULL)
+					availableField.push_back(chessboard->GetField(position->GetX(), position->GetY() - 1));
+			if (position->GetX() + 1 <= 72 && position->GetY() - 1 >= 1)
+				if (chessboard->GetField(position->GetX() + 1, position->GetY() - 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() + 1, position->GetY() - 1)->GetVisitor()->GetColor() == 0)
+					availableField.push_back(chessboard->GetField(position->GetX() + 1, position->GetY() - 1));
+			if (position->GetX() - 1 >= 65 && position->GetY() - 1 >= 1)
+				if (chessboard->GetField(position->GetX() - 1, position->GetY() - 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() - 1, position->GetY() - 1)->GetVisitor()->GetColor() == 0)
+					availableField.push_back(chessboard->GetField(position->GetX() - 1, position->GetY() - 1));
+			return availableField;
+		}
+	}
 }
 
 string CPawn::SerializationPosition()

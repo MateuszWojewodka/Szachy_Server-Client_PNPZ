@@ -6,14 +6,16 @@ CQueen::CQueen(Color color, CField *position, CChessboard *chessboard) : CFigure
 
 vector<CField *> CQueen::CheckWhichFieldsAreAvailable()
 {
-    vector <CField*> availableField;
-    CCastel *helpCastel = new CCastel(color,position,chessboard);
+    vector <CField*> availableField1, availableField2;
+    CCastel *helpCastel = new CCastel (color,position,chessboard);
     CBishop *helpBishop = new CBishop (color, position, chessboard);
-    availableField = helpCastel->CheckWhichFieldsAreAvailable();
-    availableField.insert(availableField.end(), helpBishop->CheckWhichFieldsAreAvailable().begin(), helpBishop->CheckWhichFieldsAreAvailable().end());
+    availableField1 = helpCastel->CheckWhichFieldsAreAvailable();
+	availableField2 = helpBishop->CheckWhichFieldsAreAvailable();
+    availableField1.insert(availableField1.begin(), availableField2.begin(), availableField2.end());
     delete helpCastel;
     delete helpBishop;
-    return availableField;
+	position->SetVisitor(this);
+    return availableField1;
 }
 
 string CQueen::SerializationPosition()
