@@ -29,13 +29,10 @@ CGameManager::CGameManager()
 	playerB = new CPlayer(figureB);
 
 	currentPlayer = playerW;
-
-	DeleteFigure('A', 2);
 }
 
 string CGameManager::CurrentPlayerAction(string request)
 {
-	IfMyKingIsInDanger();
 	//pierwsze warunki: jesli w zapytaniu bylo pW lub pB (zapytania zwiazane z nacisnieciem LPM) sprawdz czy pytajacy to gracz ktorego jest ruch
 	if ((request.find("pW") != string::npos && playerW == currentPlayer) || (request.find("pB") != string::npos && playerB == currentPlayer))
 	{
@@ -60,6 +57,10 @@ string CGameManager::CurrentPlayerAction(string request)
 			//sprawdz czy zaznaczyl TERAZ pole na ktore moze sie ruszyc
 			if (SerializationAvailableFields(currentPlayer->GetMarkedFigure()->GetPosition()->GetX(), currentPlayer->GetMarkedFigure()->GetPosition()->GetY()).find(search) != string::npos)
 			{
+				if (IfMyKingWillBeInDangerAfterMove(currentPlayer->GetMarkedFigure()->GetPosition(), chessboard->GetField(x, y)))
+				{
+					return " ";
+				}
 				//obsluga bicia [ustawienie pozycji pionka bitego na 0]
 				if (chessboard->GetField(x, y)->GetVisitor() != NULL) chessboard->GetField(x, y)->GetVisitor()->SetPosition(NULL);
 				//aktualizacja goscia na ZAZNACZONYM polu
@@ -88,7 +89,7 @@ string CGameManager::CurrentPlayerAction(string request)
 			}
 		}
 	}
-	return "";
+	return " ";
 }
 
 void CGameManager::DeleteFigure(char x, int y)
@@ -160,7 +161,22 @@ bool CGameManager::IfMyKingIsInDanger()
 	return false;
 }
 
-bool CGameManager::IfMyKingWillBeInDangerAfterMove(char x, int y)
+bool CGameManager::IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *toField)
 {
-	return false;
+	bool returnState;
+
+	CFigure *movingFigureFromField = fromField->GetVisitor();
+	CFigure *movingFigureToField = toField->GetVisitor();
+
+	//chwilowa zmiana miejsca figury
+	fromField->SetVisitor(NULL);
+	toField->SetVisitor(movingFigureFromField);
+
+	returnState = IfMyKingIsInDanger();
+
+	//przywracanie figur tak jak bylo
+	fromField->SetVisitor(movingFigureFromField);
+	toField->SetVisitor(movingFigureToField);
+	
+	return returnState;
 }

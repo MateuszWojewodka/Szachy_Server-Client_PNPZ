@@ -30,7 +30,7 @@ public:
     string SerializationFigurePosition ();
     string SerializationAvailableFields (char x, int y);
 	bool IfMyKingIsInDanger();
-	bool IfMyKingWillBeInDangerAfterMove(char x, int y);
+	bool IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *toField);
 };
 
 #endif // CGAMEMANAGER_H
