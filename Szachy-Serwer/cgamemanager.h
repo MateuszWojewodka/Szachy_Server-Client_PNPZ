@@ -29,6 +29,8 @@ public:
     void DeleteFigure(char x, int y);
     string SerializationFigurePosition ();
     string SerializationAvailableFields (char x, int y);
+	bool IfMyKingIsInDanger();
+	bool IfMyKingWillBeInDangerAfterMove(char x, int y);
 };
 
 #endif // CGAMEMANAGER_H
