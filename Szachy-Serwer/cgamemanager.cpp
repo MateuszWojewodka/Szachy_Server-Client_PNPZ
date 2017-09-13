@@ -74,6 +74,13 @@ string CGameManager::CurrentPlayerAction(string request)
 				//przyznanie ruchu drugiemu graczowi
 				if (currentPlayer == playerW) currentPlayer = playerB;
 				else currentPlayer = playerW;
+				
+				//sprawdzanie mata
+				if (IfThereIsCheckMate()) 
+				{
+					cout << "SZACH MAT\nWygra³: " << GameFinishedFlag.WhoWon() << endl;
+				}
+				
 				//aktualizacja
 				return SerializationFigurePosition();
 			}
@@ -185,7 +192,8 @@ bool CGameManager::IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *to
 	fromField->SetVisitor(NULL);
 	toField->SetVisitor(movingFigureFromField);
 
-	//jezeli figura ktora sie chce ruszyc to krol sam w sobie
+	//jezeli figura ktora sie chce ruszyc to krol sam w sobie to sprawdz 
+	//czy jest w zagrozeniu dla tej pozycji dla ktorej no chce sie ruszyc
 	if (movingFigureFromField == myFigure[14])
 		returnState = IfMyKingIsInDanger(toField);
 	//jezeli to nie jest krol to wez jego pozycje
@@ -197,4 +205,44 @@ bool CGameManager::IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *to
 	toField->SetVisitor(movingFigureToField);
 	
 	return returnState;
+}
+
+//jezeli przeciwnik mnie zamatowal
+bool CGameManager::IfThereIsCheckMate()
+{
+	vector <CFigure*> oppositeFigure;
+	vector <CFigure*> myFigure;
+
+	//ustalenie jaki gracz to przeciwnik
+	if (currentPlayer == playerB)
+	{
+		myFigure = figureB;
+		oppositeFigure = figureW;
+	}
+
+	else if (currentPlayer == playerW)
+	{
+		myFigure = figureW;
+		oppositeFigure = figureB;
+	}
+	
+	for each (auto figure in myFigure)
+	{
+		if (figure->GetPosition() != NULL)
+		{
+			for each (auto field in figure->CheckWhichFieldsAreAvailable())
+			{
+				if (IfMyKingWillBeInDangerAfterMove(figure->GetPosition(), field) == false)
+					return false;
+			}
+		}
+	}
+
+	if (currentPlayer == playerB)
+		GameFinishedFlag.WhiteWon();
+
+	else if (currentPlayer == playerW)
+		GameFinishedFlag.BlackWon();
+
+	return true;
 }
