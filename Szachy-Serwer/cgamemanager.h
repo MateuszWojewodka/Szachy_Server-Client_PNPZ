@@ -29,7 +29,7 @@ public:
     void DeleteFigure(char x, int y);
     string SerializationFigurePosition ();
     string SerializationAvailableFields (char x, int y);
-	bool IfMyKingIsInDanger();
+	bool IfMyKingIsInDanger(CField *myKingsField);
 	bool IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *toField);
 };
 

@@ -115,7 +115,7 @@ string CGameManager::SerializationAvailableFields(char x, int y)
 	return stringAvailableField;
 }
 
-bool CGameManager::IfMyKingIsInDanger()
+bool CGameManager::IfMyKingIsInDanger(CField *myKingsField)
 {
 	CPlayer *oppositePlayer;
 	vector <CFigure*> oppositeFigure;
@@ -137,7 +137,7 @@ bool CGameManager::IfMyKingIsInDanger()
 	}
 
 	//wspolrzedne mojego krola
-	CField *myKingsField = myFigure[14]->GetPosition();
+	//CField *myKingsField = myFigure[14]->GetPosition();
 
 	//sprawdzanie kazdej wrogiej figury czy nie bije mojego krola
 	for each  (auto figure in oppositeFigure)
@@ -165,6 +165,19 @@ bool CGameManager::IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *to
 {
 	bool returnState;
 
+	vector <CFigure*> myFigure;
+
+	//ustalenie jakie to moje figury
+	if (currentPlayer == playerB)
+	{
+		myFigure = figureB;
+	}
+
+	else if (currentPlayer == playerW)
+	{
+		myFigure = figureW;
+	}
+
 	CFigure *movingFigureFromField = fromField->GetVisitor();
 	CFigure *movingFigureToField = toField->GetVisitor();
 
@@ -172,7 +185,12 @@ bool CGameManager::IfMyKingWillBeInDangerAfterMove(CField *fromField, CField *to
 	fromField->SetVisitor(NULL);
 	toField->SetVisitor(movingFigureFromField);
 
-	returnState = IfMyKingIsInDanger();
+	//jezeli figura ktora sie chce ruszyc to krol sam w sobie
+	if (movingFigureFromField == myFigure[14])
+		returnState = IfMyKingIsInDanger(toField);
+	//jezeli to nie jest krol to wez jego pozycje
+	else
+		returnState = IfMyKingIsInDanger(myFigure[14]->GetPosition());
 
 	//przywracanie figur tak jak bylo
 	fromField->SetVisitor(movingFigureFromField);
