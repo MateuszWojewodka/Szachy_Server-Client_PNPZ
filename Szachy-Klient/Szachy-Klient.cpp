@@ -60,6 +60,10 @@ HDC hdcKingBB, hdcKingBW, hdcKingWW, hdcKingWB;
 HDC hdcKnightBB, hdcKnightBW, hdcKnightWW, hdcKnightWB;
 HDC hdcBishopBB, hdcBishopBW, hdcBishopWW, hdcBishopWB;
 
+//*************************************
+bool FIRT_TIME_FIELDS = true;
+bool FIRT_TIME_FIGURES = true;
+//*************************************
 
 int WINAPI WinMain(HINSTANCE hThisInstance,
 	HINSTANCE hPrevInstance,
@@ -203,8 +207,12 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 
 		//image functions
 		hdc = GetDC(hwnd);
-		PrepareToShowImage("img//fieldb.bmp", hdcfieldb, bmpfieldb, bmpOldFieldB);
-		PrepareToShowImage("img//fieldw.bmp", hdcfieldw, bmpfieldw, bmpOldFieldW);
+		if (FIRT_TIME_FIELDS)
+		{
+			PrepareToShowImage("img//fieldb.bmp", hdcfieldb, bmpfieldb, bmpOldFieldB);
+			PrepareToShowImage("img//fieldw.bmp", hdcfieldw, bmpfieldw, bmpOldFieldW);
+			FIRT_TIME_FIELDS = false;
+		}
 		for (int j = 0; j < 8; j++)
 		{
 			for (int i = 0; i < 4; i++)
@@ -222,35 +230,40 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 			}
 		}
 
-		PrepareToShowImage("img//pawnBB.bmp", hdcPawnBB, bmpPawnBB, bmpOldPawnBB);
-		PrepareToShowImage("img//pawnBW.bmp", hdcPawnBW, bmpPawnBW, bmpOldPawnBW);
-		PrepareToShowImage("img//pawnWW.bmp", hdcPawnWW, bmpPawnWW, bmpOldPawnWW);
-		PrepareToShowImage("img//pawnWB.bmp", hdcPawnWB, bmpPawnWB, bmpOldPawnWB);
+		if (FIRT_TIME_FIGURES)
+		{
+			PrepareToShowImage("img//pawnBB.bmp", hdcPawnBB, bmpPawnBB, bmpOldPawnBB);
+			PrepareToShowImage("img//pawnBW.bmp", hdcPawnBW, bmpPawnBW, bmpOldPawnBW);
+			PrepareToShowImage("img//pawnWW.bmp", hdcPawnWW, bmpPawnWW, bmpOldPawnWW);
+			PrepareToShowImage("img//pawnWB.bmp", hdcPawnWB, bmpPawnWB, bmpOldPawnWB);
 
-		PrepareToShowImage("img//castelBB.bmp", hdcCastelBB, bmpCastelBB, bmpOldCastelBB);
-		PrepareToShowImage("img//castelBW.bmp", hdcCastelBW, bmpCastelBW, bmpOldCastelBW);
-		PrepareToShowImage("img//castelWW.bmp", hdcCastelWW, bmpCastelWW, bmpOldCastelWW);
-		PrepareToShowImage("img//castelWB.bmp", hdcCastelWB, bmpCastelWB, bmpOldCastelWB);
+			PrepareToShowImage("img//castelBB.bmp", hdcCastelBB, bmpCastelBB, bmpOldCastelBB);
+			PrepareToShowImage("img//castelBW.bmp", hdcCastelBW, bmpCastelBW, bmpOldCastelBW);
+			PrepareToShowImage("img//castelWW.bmp", hdcCastelWW, bmpCastelWW, bmpOldCastelWW);
+			PrepareToShowImage("img//castelWB.bmp", hdcCastelWB, bmpCastelWB, bmpOldCastelWB);
 
-		PrepareToShowImage("img//queenBB.bmp", hdcQueenBB, bmpQueenBB, bmpOldQueenBB);
-		PrepareToShowImage("img//queenBW.bmp", hdcQueenBW, bmpQueenBW, bmpOldQueenBW);
-		PrepareToShowImage("img//queenWW.bmp", hdcQueenWW, bmpQueenWW, bmpOldQueenWW);
-		PrepareToShowImage("img//queenWB.bmp", hdcQueenWB, bmpQueenWB, bmpOldQueenWB);
+			PrepareToShowImage("img//queenBB.bmp", hdcQueenBB, bmpQueenBB, bmpOldQueenBB);
+			PrepareToShowImage("img//queenBW.bmp", hdcQueenBW, bmpQueenBW, bmpOldQueenBW);
+			PrepareToShowImage("img//queenWW.bmp", hdcQueenWW, bmpQueenWW, bmpOldQueenWW);
+			PrepareToShowImage("img//queenWB.bmp", hdcQueenWB, bmpQueenWB, bmpOldQueenWB);
 
-		PrepareToShowImage("img//kingBB.bmp", hdcKingBB, bmpKingBB, bmpOldKingBB);
-		PrepareToShowImage("img//kingBW.bmp", hdcKingBW, bmpKingBW, bmpOldKingBW);
-		PrepareToShowImage("img//kingWW.bmp", hdcKingWW, bmpKingWW, bmpOldKingWW);
-		PrepareToShowImage("img//kingWB.bmp", hdcKingWB, bmpKingWB, bmpOldKingWB);
+			PrepareToShowImage("img//kingBB.bmp", hdcKingBB, bmpKingBB, bmpOldKingBB);
+			PrepareToShowImage("img//kingBW.bmp", hdcKingBW, bmpKingBW, bmpOldKingBW);
+			PrepareToShowImage("img//kingWW.bmp", hdcKingWW, bmpKingWW, bmpOldKingWW);
+			PrepareToShowImage("img//kingWB.bmp", hdcKingWB, bmpKingWB, bmpOldKingWB);
 
-		PrepareToShowImage("img//knightBB.bmp", hdcKnightBB, bmpKnightBB, bmpOldKnightBB);
-		PrepareToShowImage("img//knightBW.bmp", hdcKnightBW, bmpKnightBW, bmpOldKnightBW);
-		PrepareToShowImage("img//knightWW.bmp", hdcKnightWW, bmpKnightWW, bmpOldKnightWW);
-		PrepareToShowImage("img//knightWB.bmp", hdcKnightWB, bmpKnightWB, bmpOldKnightWB);
+			PrepareToShowImage("img//knightBB.bmp", hdcKnightBB, bmpKnightBB, bmpOldKnightBB);
+			PrepareToShowImage("img//knightBW.bmp", hdcKnightBW, bmpKnightBW, bmpOldKnightBW);
+			PrepareToShowImage("img//knightWW.bmp", hdcKnightWW, bmpKnightWW, bmpOldKnightWW);
+			PrepareToShowImage("img//knightWB.bmp", hdcKnightWB, bmpKnightWB, bmpOldKnightWB);
 
-		PrepareToShowImage("img//bishopBB.bmp", hdcBishopBB, bmpBishopBB, bmpOldBishopBB);
-		PrepareToShowImage("img//bishopBW.bmp", hdcBishopBW, bmpBishopBW, bmpOldBishopBW);
-		PrepareToShowImage("img//bishopWW.bmp", hdcBishopWW, bmpBishopWW, bmpOldBishopWW);
-		PrepareToShowImage("img//bishopWB.bmp", hdcBishopWB, bmpBishopWB, bmpOldBishopWB);
+			PrepareToShowImage("img//bishopBB.bmp", hdcBishopBB, bmpBishopBB, bmpOldBishopBB);
+			PrepareToShowImage("img//bishopBW.bmp", hdcBishopBW, bmpBishopBW, bmpOldBishopBW);
+			PrepareToShowImage("img//bishopWW.bmp", hdcBishopWW, bmpBishopWW, bmpOldBishopWW);
+			PrepareToShowImage("img//bishopWB.bmp", hdcBishopWB, bmpBishopWB, bmpOldBishopWB);
+			
+			FIRT_TIME_FIGURES = false;
+		}
 		for (int i = 65; i < 73; i++)
 		{
 			for (int j = 1; j < 9; j++)
