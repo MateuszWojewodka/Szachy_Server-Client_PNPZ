@@ -303,7 +303,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 			//LOGIC
 			client = new Client();
 			request = "whenStart";
-			SetTimer(hwnd, 0, 200, (TIMERPROC)NULL);
+			SetTimer(hwnd, 0, 1000, (TIMERPROC)NULL);
 			//GRAPHIC
 			ShowWindow(g_hBGraj, SW_HIDE);
 			ShowWindow(g_hBWyjscie, SW_HIDE);

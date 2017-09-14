@@ -21,6 +21,8 @@ vector<CField *> CPawn::CheckWhichFieldsAreAvailable()
 			if (position->GetX() - 1 >= 65 && position->GetY() + 1 <= 8)
 				if (chessboard->GetField(position->GetX() - 1, position->GetY() + 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() - 1, position->GetY() + 1)->GetVisitor()->GetColor() == 1)
 					availableField.push_back(chessboard->GetField(position->GetX() - 1, position->GetY() + 1));
+			if (position->GetY() == 2 && (chessboard->GetField(position->GetX(), position->GetY() + 2)->GetVisitor() == NULL || chessboard->GetField(position->GetX(), position->GetY() + 2)->GetVisitor()->GetColor() == 1))
+				availableField.push_back(chessboard->GetField(position->GetX(), position->GetY() + 2));
 				return availableField;
 		}
 		case black:
@@ -34,6 +36,8 @@ vector<CField *> CPawn::CheckWhichFieldsAreAvailable()
 			if (position->GetX() - 1 >= 65 && position->GetY() - 1 >= 1)
 				if (chessboard->GetField(position->GetX() - 1, position->GetY() - 1)->GetVisitor() != NULL && chessboard->GetField(position->GetX() - 1, position->GetY() - 1)->GetVisitor()->GetColor() == 0)
 					availableField.push_back(chessboard->GetField(position->GetX() - 1, position->GetY() - 1));
+			if (position->GetY() == 7 && (chessboard->GetField(position->GetX(), position->GetY() - 2)->GetVisitor() == NULL || chessboard->GetField(position->GetX(), position->GetY() - 2)->GetVisitor()->GetColor() == 0))
+				availableField.push_back(chessboard->GetField(position->GetX(), position->GetY() - 2));
 			return availableField;
 		}
 	}
